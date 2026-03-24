@@ -1,0 +1,34 @@
+<div class="chat-container">
+  <div class="chat-header">
+    <h3>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="28" height="28">
+        <path d="M5 9.2h3V19H5zM10.6 5h2.8v14h-2.8zm5.6 8H19v6h-2.8z"/>
+      </svg>
+      <span>Finance Bot</span>
+    </h3>
+  </div>
+  <div class="chat-messages" #chatContainer>
+    <div *ngFor="let msg of messages" class="message-wrapper" [ngClass]="msg.sender === 'User' ? 'user' : 'bot'">
+      <div class="avatar">
+        <svg *ngIf="msg.sender === 'Bot'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M5 9.2h3V19H5zM10.6 5h2.8v14h-2.8zm5.6 8H19v6h-2.8z"/>
+        </svg>
+        <svg *ngIf="msg.sender === 'User'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+        </svg>
+      </div>
+      <div class="message" [ngClass]="{ 'error': msg.isError }">
+        <p *ngIf="!msg.isHtml">{{ msg.text }}</p>
+        <div *ngIf="msg.isHtml" [innerHTML]="msg.html"></div>
+      </div>
+    </div>
+  </div>
+  <div class="chat-input">
+    <input type="text" [(ngModel)]="userInput" (keyup.enter)="sendMessage()" placeholder="Ask the Finance Bot..." />
+    <button (click)="sendMessage()">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+      </svg>
+    </button>
+  </div>
+</div>
